@@ -36,7 +36,7 @@ export default function App() {
             <Stack.Screen
               name="Play"
               component={Play}
-              options={{title: 'Play Screen'}}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>

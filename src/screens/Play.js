@@ -15,52 +15,42 @@ const windowHeight = Dimensions.get('screen').height;
 
 const Home = ({navigation, route}) => {
 
-  const {spinData} = route.params;
+  const {fisrtData} = route.params;
 
-  const [deg, setDeg] = useState(0);
+  const [top, randomTop] = useState(50);
 
-  const [timeDown, setTimeDown] = useState(Math.floor(1000 + Math.random() * 2000));
+  const [left, randomLeft] = useState(50);
 
-  const [play, setPlay] = useState(false);
+  const [timeDown, setTimeDown] = useState(Math.floor(10 + Math.random() * 60) * 1000);
 
   useEffect(() => {
     const timeD = setTimeout(() => {
-      if(timeDown > 0 && play){
-        setTimeDown(timeDown - 10);
-        setDeg(deg + 30);
+      if(timeDown > 0){
+        console.log(timeDown);
+        Math.floor(0 + Math.random() * 5) === 0 ? randomTop(top + 1) : randomTop(top - 1);
+        Math.floor(0 + Math.random() * 5) === 0 ? randomLeft(left + 1) : randomLeft(left - 1);
       }
-      if(timeDown === 0 && play){
-        setPlay(false);
+      if(timeDown === 0 ){
+        setTimeout(() => {
+          navigation.goBack();
+        }, 3000);
       }
-    }, 1);
+    }, 500);
     return () => {
       clearTimeout(timeD);
     }
-  },[timeDown, play]);
-
-  const onClickStartButton = () => {
-    setPlay(true);
-    setTimeDown(Math.floor(1000 + Math.random() * 2000));
-  }
-
+  },[timeDown]);
 
   return (
     <ImageBackground style={appStyle.homeView} source={images.background}>
-      <Animated.Image source={spinData.image} style={{
-        width: windowWidth * 0.6,
-        height: windowWidth * 0.6,
-        marginTop: 30,
-        transform: [
-          {
-            rotate: `${deg} deg`,
-          }
-        ]
+      <Animated.Image source={fisrtData.image} style={{
+        width: windowWidth * 0.2,
+        height: windowWidth * 0.2,
+        resizeMode: 'contain',
+        position: 'absolute',
+        top: `${top} %`,
+        left: `${left} %`,
       }} />
-      <View style={appStyle.bottomView}>
-        <TouchableOpacity onPress={() => onClickStartButton()}>
-          <Image style={appStyle.createButton} source={images.Spin} />
-        </TouchableOpacity>
-      </View>
     </ImageBackground>
   );
 };

@@ -1,4 +1,4 @@
-package com.amazon.apimespinnersmlao;
+package com.amazon.oceanfishsimuappz;
 
 import com.facebook.react.ReactActivity;
 

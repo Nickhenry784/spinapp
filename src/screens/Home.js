@@ -16,14 +16,20 @@ import { images } from "../assets";
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
 
-const numCol = 2;
+const numCol = 3;
 
-const dataSpin = [
-  {id: 1, image: images.s1},
-  {id: 2, image: images.s2},
-  {id: 3, image: images.s3},
-  {id: 4, image: images.s4},
-  {id: 5, image: images.s5},
+const dataFisrt = [
+  {id: 1, image: images.f1},
+  {id: 2, image: images.f2},
+  {id: 3, image: images.f3},
+  {id: 4, image: images.f4},
+  {id: 5, image: images.f5},
+  {id: 6, image: images.f6},
+  {id: 7, image: images.f7},
+  {id: 8, image: images.f8},
+  {id: 9, image: images.f9},
+  {id: 10, image: images.f10},
+  {id: 11, image: images.f11},
 ]
 
 const Home = () => {
@@ -32,23 +38,13 @@ const Home = () => {
   const points = useSelector(state => state.points);
   const dispatch = useDispatch();
 
-  const [spin, setSpin] = useState(null);
-
-  const onClickStartButton = () => {
+  const onClickStartButton = (item) => {
     if (points.value === 0) {
       Alert.alert('Please buy more turn');
       return false;
     }
     dispatch(decrement());
-    if(spin === null){
-      var randomInt = Math.floor(0 + Math.random() * 5);
-      setSpin(dataSpin[randomInt]);
-    }
-    navigation.navigate("Play", {spinData: spin});
-  }
-
-  const onClickItemList = (item) => {
-    setSpin(item);
+    navigation.navigate("Play", {fisrtData: item});
   }
 
 
@@ -66,24 +62,19 @@ const Home = () => {
           </ImageBackground>
         </TouchableOpacity>
       </View>
-      <Text style={appStyle.labelText}>Choose your spin</Text>
+      <Image source={images.welcome} style={appStyle.centerImage} />
       <View style={appStyle.centerView}>
         <FlatList
-          data={dataSpin} 
+          data={dataFisrt} 
           scrollEnabled={false}
           numColumns={numCol}
           renderItem={({item}) => (
-            <TouchableOpacity key={item.id} onPress={() => onClickItemList(item)}>
+            <TouchableOpacity key={item.id} onPress={() => onClickStartButton(item)}>
               <View style={appStyle.itemView}>
                 <Image source={item.image} style={appStyle.logoImage} />
               </View>
             </TouchableOpacity>
           )}/>
-      </View>
-      <View style={appStyle.bottomView}>
-        <TouchableOpacity onPress={() => onClickStartButton()}>
-          <Image style={appStyle.createButton} source={images.OK} />
-        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -96,7 +87,7 @@ export const appStyle = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     resizeMode: 'cover',
   },
   attributeView: {
@@ -133,11 +124,9 @@ export const appStyle = StyleSheet.create({
     alignItems: 'center',
   },
   centerImage: {
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.4,
+    width: windowWidth * 0.6,
+    height: windowHeight * 0.2,
     resizeMode: 'contain',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   scoreStyle: {
     width: windowWidth * 0.5,
