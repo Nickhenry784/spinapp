@@ -119,9 +119,8 @@ export default function App() {
   };
 
   return (
-    <View style={styles.homeView}>
+    <ImageBackground style={styles.homeView} source={images.background}>
       <ScrollView
-        style={styles.bg}
         contentContainerStyle={{paddingHorizontal: 10}}>
         {isLoading ? (
           <ActivityIndicator size="small" />
@@ -159,7 +158,7 @@ export default function App() {
         )}
 
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -170,76 +169,21 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
-  },
-  items: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  itemsSubs: {
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
   labelText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
   },
-  item: {
-    margin: 5,
-    width: 150,
-    height: 150,
-    backgroundColor: '#fff',
-    elevation: 1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  itemSub: {
-    margin: 5,
-    width: 150,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    elevation: 1,
-    borderRadius: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  d: {
-    width: 30,
-    height: 20,
-    marginRight: 5,
-  },
   price: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
     color: '#212121',
   },
   descr: {
-    fontSize: 14,
+    fontSize: 18,
     color: '#212121',
-    fontWeight: '500',
-  },
-  itemList: {},
-  item2: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 3,
-    elevation: 2,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  item2Body: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
+    fontWeight: 'bold',
   },
   itemList3: {
     width: '80%',
@@ -256,8 +200,10 @@ const styles = StyleSheet.create({
     height: 100,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    borderRadius: 3,
-    marginBottom: 10,
+    borderRadius: 8,
+    borderColor: 'black',
+    borderWidth: 3,
+    marginBottom: 5,
     alignItems: 'center',
     justifyContent: 'space-between',
   },

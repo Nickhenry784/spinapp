@@ -1,4 +1,4 @@
-package com.amazon.teeshirtdecokuteapp;
+package com.amazon.flipfourbothard;
 
 import com.facebook.react.ReactActivity;
 
