@@ -8,7 +8,6 @@ import {PersistGate} from 'redux-persist/integration/react';
 
 import HomeScreen from './screens/Home';
 import Buy from './screens/Buy';
-import Play from './screens/Play';
 
 import {store, persistor} from './redux/store';
 import {LogBox} from 'react-native';
@@ -32,11 +31,6 @@ export default function App() {
               name="BUY"
               component={Buy}
               options={{title: 'BUY TURNS'}}
-            />
-            <Stack.Screen
-              name="Play"
-              component={Play}
-              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>

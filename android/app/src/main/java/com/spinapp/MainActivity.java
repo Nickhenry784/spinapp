@@ -1,4 +1,4 @@
-package com.amazon.oceanfishsimuappz;
+package com.amazon.teeshirtdecokuteapp;
 
 import com.facebook.react.ReactActivity;
 

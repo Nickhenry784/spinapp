@@ -3,7 +3,7 @@ const {createSlice} = require('@reduxjs/toolkit');
 const points = createSlice({
   name: 'points',
   initialState: {
-    value: 10,
+    value: 100,
   },
   reducers: {
     decrement: state => {

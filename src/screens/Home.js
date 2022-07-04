@@ -7,7 +7,7 @@ import {
   ImageBackground, 
   Image, 
   Alert  } from "react-native";
-import React, {useEffect, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {decrement} from '../redux/pointSlice';
 import {useDispatch, useSelector} from 'react-redux';
@@ -15,36 +15,37 @@ import { images } from "../assets";
 
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
-
-const numCol = 3;
-
-const dataFisrt = [
-  {id: 1, image: images.f1},
-  {id: 2, image: images.f2},
-  {id: 3, image: images.f3},
-  {id: 4, image: images.f4},
-  {id: 5, image: images.f5},
-  {id: 6, image: images.f6},
-  {id: 7, image: images.f7},
-  {id: 8, image: images.f8},
-  {id: 9, image: images.f9},
-  {id: 10, image: images.f10},
-  {id: 11, image: images.f11},
-]
+const bearData = [
+  {id: 1, image: images.s1},
+  {id: 2, image: images.s2},
+  {id: 3, image: images.s3},
+  {id: 4, image: images.s4},
+  {id: 5, image: images.s5},
+  {id: 6, image: images.s6},
+  {id: 7, image: images.s7},
+  {id: 8, image: images.s8},
+];
+const numCol = 4;
 
 const Home = () => {
   const navigation = useNavigation();
 
   const points = useSelector(state => state.points);
+  const [items, setItems] = useState(null);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const onClickStartButton = (item) => {
+  const onClickStartButton = () => {
     if (points.value === 0) {
       Alert.alert('Please buy more turn');
       return false;
     }
+    if(items === null){
+      Alert.alert("Please choose design image!");
+      return false;
+    }
     dispatch(decrement());
-    navigation.navigate("Play", {fisrtData: item});
+    setShow(true);
   }
 
 
@@ -52,31 +53,51 @@ const Home = () => {
     navigation.navigate("BUY");
   }
 
+  const onClickRefreshButton = () => {
+    setShow(false);
+    setItems(null);
+  }
+
+  const onClickItem = (item) => {
+    setItems(item);
+    setShow(false);
+  }
+
+
 
   return (
-    <ImageBackground style={appStyle.homeView} source={images.background}>
-      <View style={appStyle.appBar}>
+    <View style={appStyle.homeView}>
+      <View style={appStyle.leftBar}>
         <TouchableOpacity onPress={onClickTurnButton}>
           <ImageBackground source={images.buy} style={appStyle.buyImage}>
             <Text style={appStyle.turnText}>{points.value}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
-      <Image source={images.welcome} style={appStyle.centerImage} />
       <View style={appStyle.centerView}>
-        <FlatList
-          data={dataFisrt} 
+        <TouchableOpacity onPress={() => onClickStartButton()}>
+            <Image source={images.OK} style={appStyle.b2Image} />
+        </TouchableOpacity>
+        <ImageBackground source={images.tshirt} style={appStyle.tshirtImage}>
+          {show && <Image style={appStyle.b1Image} source={items} />}
+        </ImageBackground>
+        <TouchableOpacity onPress={() => onClickRefreshButton()}>
+            <Image source={images.refresh} style={appStyle.refreshBtn} />
+        </TouchableOpacity>
+      </View>
+      <View style={appStyle.bottomView}>
+        <FlatList 
+          data={bearData}
           scrollEnabled={false}
           numColumns={numCol}
           renderItem={({item}) => (
-            <TouchableOpacity key={item.id} onPress={() => onClickStartButton(item)}>
-              <View style={appStyle.itemView}>
-                <Image source={item.image} style={appStyle.logoImage} />
-              </View>
+            <TouchableOpacity key={item.id} onPress={() => onClickItem(item.image)}>
+              <Image source={item.image} style={appStyle.itemImage} />
             </TouchableOpacity>
-          )}/>
+          )}
+        />
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -87,33 +108,14 @@ export const appStyle = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
+    justifyContent: 'flex-end',
     resizeMode: 'cover',
   },
-  attributeView: {
-    flex: 0.1,
-    width: '40%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  logoImage: {
-    width: windowWidth * 0.2,
-    height: windowWidth * 0.2,
-    resizeMode: 'contain',
-  },
-  itemView: {
-    width: windowWidth * 0.3,
-    height: windowWidth * 0.3,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 10,
-  },
-  appBar: {
+  leftBar: {
     position: 'absolute',
-    top: '5%',
-    right: '3%',
+    top: '3%',
+    left: '3%',
   },
   turnView: {
     flexDirection: 'row',
@@ -123,27 +125,40 @@ export const appStyle = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  centerImage: {
-    width: windowWidth * 0.6,
-    height: windowHeight * 0.2,
-    resizeMode: 'contain',
-  },
-  scoreStyle: {
-    width: windowWidth * 0.5,
-    height: windowWidth * 0.1,
-    resizeMode: 'contain',
-  },
   turnText: {
     fontSize: windowWidth > 640 ? 30 : 25,
-    fontFamily: 'Comic Boom Bubble_DEMO',
+    fontWeight: 'bold',
     color: 'white',
   },
-  labelText: {
-    fontSize: windowWidth > 640 ? 60 : 40,
+  tshirtImage: {
+    width: windowWidth * 0.6,
+    height: windowHeight * 0.4,
+    resizeMode: 'contain',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  itemImage:{
+    width: windowWidth * 0.2,
+    height: windowWidth * 0.2,
+    resizeMode: 'contain',
+    margin: 10,
+  },
+  centerView: {
+    width: '100%',
+    flex: 0.5,
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  refreshBtn: {
+    width: windowWidth * 0.15,
+    height: windowWidth * 0.15,
+    resizeMode: 'contain',
+  },
+  priceText: {
+    fontSize: windowWidth > 640 ? 50 : 30,
+    fontWeight: 'bold',
     color: 'white',
-    fontFamily: 'Comic Boom Bubble_DEMO',
-    marginBottom: 10,
-    marginTop: windowHeight * 0.1,
   },
   buyImage: {
     width: windowWidth * 0.3,
@@ -151,29 +166,21 @@ export const appStyle = StyleSheet.create({
     resizeMode: 'contain',
     alignItems: 'center',
     justifyContent: 'center',
-
   },
-  centerView: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  b1Image: {
+    width: windowWidth * 0.3,
+    height: windowHeight * 0.15,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
+  b2Image: {
+    width: windowWidth * 0.2,
+    height: windowWidth * 0.1,
+    resizeMode: 'cover',
   },
   bottomView: {
-    flex: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: windowHeight * 0.3,
     width: '100%',
-    marginBottom: 20,
-  },
-  createButton: {
-    width: windowWidth * 0.3,
-    height: windowHeight * 0.1,
-    resizeMode: 'contain',
-  },
-  backStyle: {
-    width: windowWidth * 0.2,
-    height: windowWidth * 0.2,
-    resizeMode: 'contain',
   },
 });
 

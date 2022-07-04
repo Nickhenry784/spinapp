@@ -119,10 +119,10 @@ export default function App() {
   };
 
   return (
-    <ImageBackground source={images.background} style={styles.homeView}>
+    <View style={styles.homeView}>
       <ScrollView
         style={styles.bg}
-        contentContainerStyle={{paddingHorizontal: 20, paddingTop: 10}}>
+        contentContainerStyle={{paddingHorizontal: 10}}>
         {isLoading ? (
           <ActivityIndicator size="small" />
         ) : (
@@ -159,7 +159,7 @@ export default function App() {
         )}
 
       </ScrollView>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    resizeMode: 'cover',
+    backgroundColor: 'white',
   },
   items: {
     marginTop: 20,
@@ -242,22 +242,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemList3: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -5,
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   item3: {
-    width: '50%',
+    width: '100%',
     padding: 5,
   },
   item3Content: {
     backgroundColor: '#fff',
+    width: 300,
+    height: 100,
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 3,
-    elevation: 2,
     marginBottom: 10,
-
     alignItems: 'center',
     justifyContent: 'space-between',
   },
